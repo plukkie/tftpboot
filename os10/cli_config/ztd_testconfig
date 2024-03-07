@@ -5,6 +5,7 @@ do crypto cert generate self-signed cert-file home://gnmi-os10-0.crt key-file ho
 do crypto cert install cert-file home://gnmi-os10-0.crt key-file home://gnmi-os10-0.key
 
 hostname ZTD-TEST-STAGED
+
 rest api restconf
 ip ssh server port 222
 ip name-server 8.8.8.8 8.8.4.4

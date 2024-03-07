@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ## Set SFDMODE to 1 converts switch to SFD managed, set to 0 puts in normal mode
-MGTPREFIX="10.10.10"
+MGTPREFIX="192.168.1"
 MGTNET=0
-TFTP_HOST=201
+TFTP_HOST=1
 declare -i GW=$MGTNET+1
 MGTMASK="/24"
 TFTPSERVER="${MGTPREFIX}.${TFTP_HOST}"
@@ -58,7 +58,7 @@ apicall=`curl -f -s -i -k -H "Accept: application/json" -H "Content-Type: applic
 ## Upload ZTP staging complete file to web server
 ZTPFINISHFILE=`echo ${DHCP_IP}`${ZTPFINISH}
 echo $SWITCHNAME > $TMP/${ZTPFINISHFILE} 
-$CURL --interface $OOB_INT -T $TMP/$ZTPFINISHFILE tftp://${TFTPSERVER}${STAGING_FINISHED}/${ZTPFINISHFILE} 2>&1 | tee -a $LOG`
+$CURL --interface $OOB_INT -T $TMP/$ZTPFINISHFILE tftp://${TFTPSERVER}${STAGING_FINISHED}/${ZTPFINISHFILE} 2>&1 | tee -a $LOG
 echo "ZTP has finished. Uploading file '$ZTPFINISHFILE' to server 'tftp://${TFTPSERVER}${STAGING_FINISHED}/${ZTPFINISHFILE}'" 2>&1 | tee -a $LOG && sleep 2
 
 
