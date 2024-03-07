@@ -55,6 +55,9 @@ sleep 2
 echo "Configuring hostname $SWITCHNAME via API..." 2>&1 | tee -a $LOG && sleep 2
 apicall=`curl -f -s -i -k -H "Accept: application/json" -H "Content-Type: application/json" -u $USER_NAME:$PASSWORD -d'{"dell-system:system":{"hostname": "'"$SWITCHNAME"'" }}' -X PATCH $APP$MGMT_IP/restconf/data/dell-system:system`
 
+## Save config
+apicall=`curl -f -s -i -k -H "Accept: application/json" -H "Content-Type: application/json" -u $USER_NAME:$PASSWORD -d '{"yuma-netconf:input":{"target":{"startup":[null]},"source":{"running":[null]}}}' -X POST $APP$MGMT_IP/restconf/operations/copy-config`
+
 ## Upload ZTP staging complete file to web server
 ZTPFINISHFILE=`echo ${DHCP_IP}`${ZTPFINISH}
 echo $SWITCHNAME > $TMP/${ZTPFINISHFILE} 
